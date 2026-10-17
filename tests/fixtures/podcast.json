@@ -1,0 +1,55 @@
+{
+  "responseContext": {},
+  "contents": {
+    "twoColumnBrowseResultsRenderer": {
+      "tabs": [
+        {
+          "tabRenderer": {
+            "content": {
+              "sectionListRenderer": {
+                "contents": [
+                  {
+                    "musicResponsiveHeaderRenderer": {
+                      "title": { "runs": [{ "text": "Fake Show" }] },
+                      "straplineTextOne": { "runs": [{ "text": "Fake Host" }] }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "secondaryContents": {
+        "sectionListRenderer": {
+          "contents": [
+            {
+              "musicShelfRenderer": {
+                "contents": [
+                  {
+                    "musicMultiRowListItemRenderer": {
+                      "onTap": { "watchEndpoint": { "videoId": "vid00000030" } },
+                      "title": { "runs": [{ "text": "Episode One", "navigationEndpoint": { "browseEndpoint": { "browseId": "MPEDvid00000030" } } }] },
+                      "subtitle": { "runs": [{ "text": "244K views" }, { "text": " • " }, { "text": "Sep 23" }] },
+                      "playbackProgress": {
+                        "musicPlaybackProgressRenderer": {
+                          "durationText": { "runs": [{ "text": " • " }, { "text": "1 hr 36 min" }] }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "musicMultiRowListItemRenderer": {
+                      "title": { "runs": [{ "text": "No tap target, skipped" }] }
+                    }
+                  }
+                ],
+                "continuations": [{ "nextContinuationData": { "continuation": "fake" } }]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "responseContext": {},
+  "contents": {
+    "twoColumnBrowseResultsRenderer": {
+      "tabs": [
+        {
+          "tabRenderer": {
+            "content": {
+              "sectionListRenderer": {
+                "contents": [
+                  {
+                    "musicResponsiveHeaderRenderer": {
+                      "title": { "runs": [{ "text": "Fake Album" }] },
+                      "straplineTextOne": { "runs": [{ "text": "Album Artist" }] }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "secondaryContents": {
+        "sectionListRenderer": {
+          "contents": [
+            {
+              "musicShelfRenderer": {
+                "contents": [
+                  {
+                    "musicResponsiveListItemRenderer": {
+                      "flexColumns": [
+                        { "musicResponsiveListItemFlexColumnRenderer": { "text": { "runs": [{ "text": "Album Opener" }] } } },
+                        { "musicResponsiveListItemFlexColumnRenderer": { "text": {} } },
+                        { "musicResponsiveListItemFlexColumnRenderer": { "text": { "runs": [{ "text": "18M plays" }] } } }
+                      ],
+                      "fixedColumns": [
+                        { "musicResponsiveListItemFixedColumnRenderer": { "text": { "runs": [{ "text": "3:29" }] } } }
+                      ],
+                      "playlistItemData": { "videoId": "vid00000020" }
+                    }
+                  },
+                  {
+                    "musicResponsiveListItemRenderer": {
+                      "flexColumns": [
+                        { "musicResponsiveListItemFlexColumnRenderer": { "text": { "runs": [{ "text": "Feature" }] } } },
+                        { "musicResponsiveListItemFlexColumnRenderer": { "text": { "runs": [{ "text": "Guest" }] } } },
+                        { "musicResponsiveListItemFlexColumnRenderer": { "text": { "runs": [{ "text": "5K plays" }] } } }
+                      ],
+                      "playlistItemData": { "videoId": "vid00000021" }
+                    }
+                  }
+                ]
+              }
+            },
+            { "musicCarouselShelfRenderer": { "contents": [] } }
+          ]
+        }
+      }
+    }
+  }
+}

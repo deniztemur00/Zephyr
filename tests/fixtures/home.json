@@ -1,0 +1,90 @@
+{
+  "responseContext": {},
+  "contents": {
+    "singleColumnBrowseResultsRenderer": {
+      "tabs": [
+        {
+          "tabRenderer": {
+            "content": {
+              "sectionListRenderer": {
+                "contents": [
+                  {
+                    "musicCarouselShelfRenderer": {
+                      "header": {
+                        "musicCarouselShelfBasicHeaderRenderer": {
+                          "title": { "runs": [{ "text": "Listen again" }] }
+                        }
+                      },
+                      "contents": [
+                        {
+                          "musicTwoRowItemRenderer": {
+                            "title": { "runs": [{ "text": "Song One" }] },
+                            "subtitle": { "runs": [{ "text": "Artist A" }, { "text": " • " }, { "text": "1M views" }] },
+                            "navigationEndpoint": { "watchEndpoint": { "videoId": "vid00000001" } }
+                          }
+                        },
+                        {
+                          "musicTwoRowItemRenderer": {
+                            "title": { "runs": [{ "text": "Fake Mix" }] },
+                            "subtitle": { "runs": [{ "text": "Playlist" }] },
+                            "navigationEndpoint": { "browseEndpoint": { "browseId": "VLPLfake" } }
+                          }
+                        },
+                        {
+                          "musicTwoRowItemRenderer": {
+                            "title": { "runs": [{ "text": "No endpoint, skipped" }] }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "musicCarouselShelfRenderer": {
+                      "header": {
+                        "musicCarouselShelfBasicHeaderRenderer": {
+                          "title": { "runs": [{ "text": "Quick picks" }] }
+                        }
+                      },
+                      "contents": [
+                        {
+                          "musicResponsiveListItemRenderer": {
+                            "flexColumns": [
+                              {
+                                "musicResponsiveListItemFlexColumnRenderer": {
+                                  "text": {
+                                    "runs": [
+                                      {
+                                        "text": "Song Three",
+                                        "navigationEndpoint": { "watchEndpoint": { "videoId": "vid00000003" } }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              { "musicResponsiveListItemFlexColumnRenderer": { "text": { "runs": [{ "text": "Artist C" }] } } }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "musicCarouselShelfRenderer": {
+                      "header": {
+                        "musicCarouselShelfBasicHeaderRenderer": {
+                          "title": { "runs": [{ "text": "Empty shelf, skipped" }] }
+                        }
+                      },
+                      "contents": []
+                    }
+                  },
+                  { "musicTastebuilderShelfRenderer": {} }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

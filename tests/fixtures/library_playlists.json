@@ -1,0 +1,52 @@
+{
+  "responseContext": {},
+  "contents": {
+    "singleColumnBrowseResultsRenderer": {
+      "tabs": [
+        {
+          "tabRenderer": {
+            "content": {
+              "sectionListRenderer": {
+                "contents": [
+                  {
+                    "gridRenderer": {
+                      "items": [
+                        {
+                          "musicTwoRowItemRenderer": {
+                            "title": {
+                              "runs": [
+                                {
+                                  "text": "New playlist",
+                                  "navigationEndpoint": { "createPlaylistEndpoint": { "params": "CAI%3D" } }
+                                }
+                              ]
+                            },
+                            "navigationEndpoint": { "createPlaylistEndpoint": { "params": "CAI%3D" } }
+                          }
+                        },
+                        {
+                          "musicTwoRowItemRenderer": {
+                            "title": { "runs": [{ "text": "Liked Music" }] },
+                            "subtitle": { "runs": [{ "text": "Auto playlist" }] },
+                            "navigationEndpoint": { "browseEndpoint": { "browseId": "VLLM" } }
+                          }
+                        },
+                        {
+                          "musicTwoRowItemRenderer": {
+                            "title": { "runs": [{ "text": "Road trip" }] },
+                            "subtitle": { "runs": [{ "text": "Playlist" }, { "text": " • " }, { "text": "12 tracks" }] },
+                            "navigationEndpoint": { "browseEndpoint": { "browseId": "VLPLfake2" } }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
