@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 use serde::Deserialize;
 
 const LATEST_RELEASE: &str = "https://api.github.com/repos/deniztemur00/Zephyr/releases/latest";
@@ -32,6 +34,7 @@ pub async fn check(http: reqwest::Client) -> Result<Option<Release>, String> {
             concat!("Zephyr/", env!("CARGO_PKG_VERSION")),
         )
         .header(reqwest::header::ACCEPT, "application/vnd.github+json")
+        .timeout(Duration::from_secs(15))
         .send()
         .await
         .and_then(reqwest::Response::error_for_status)
