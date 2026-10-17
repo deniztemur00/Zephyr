@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  release:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Tag matches Cargo.toml version
+        run: |
+          version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match Cargo.toml version $version"
+            exit 1
+          fi
+
+      - run: cargo test
+      - run: cargo build --release --locked
+
+      - name: Package
+        run: |
+          mkdir dist
+          cp target/release/zephyr.exe dist/zephyr-windows-x64.exe
+          cd dist && sha256sum zephyr-windows-x64.exe > SHA256SUMS
+
+      # Draft: check the exe, then press Publish on GitHub. Only published releases count as updates.
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --draft --generate-notes --title "Zephyr $GITHUB_REF_NAME"
