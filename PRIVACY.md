@@ -48,6 +48,7 @@ that yourself, without having to trust us.
 | `www.youtube.com` | View counts; finding the audio stream | Only for view counts |
 | `*.googlevideo.com` | The audio itself | No |
 | `i.ytimg.com`, `*.googleusercontent.com`, `*.ggpht.com` | Cover images | No |
+| `api.github.com` | Checking for a new Zephyr release, once per start and when you press Check again | No |
 | `accounts.google.com` and the servers Google's sign-in page uses | Only while the sign-in window is open | That window has its own Google login |
 
 If YouTube's direct audio lookup fails, the app asks the separate program
@@ -60,10 +61,10 @@ You do not have to take our word for any of this.
 **Watch the connections while the app runs**
 
 1. Press `Win + R`, type `resmon` and press Enter (Windows Resource Monitor).
-2. Open the **Network** tab and tick `zephyr.exe` in the list at the top.
+2. Open the **Network** tab and tick `Zephyr.exe` in the list at the top.
 3. Under **TCP Connections**, every remote address the app is talking to is
    listed. All of them should belong to Google (YouTube and its image and
-   video servers).
+   video servers), apart from GitHub for the update check.
 4. To see names instead of numbers, open PowerShell and run
    `Resolve-DnsName <address>`, or use Microsoft's free **TCPView** tool.
 
