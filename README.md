@@ -7,6 +7,10 @@
 <p align="center">A lite, native desktop client for YouTube Music.</p>
 
 <p align="center">
+  <b>One 9 MB file</b> &nbsp;·&nbsp; <b>No installer</b> &nbsp;·&nbsp; <b>No runtime to install</b> &nbsp;·&nbsp; <b>~33 MB of memory while playing</b>
+</p>
+
+<p align="center">
   <a href="https://github.com/deniztemur00/Zephyr/releases/latest"><b>Download for Windows</b></a>
 </p>
 
@@ -28,6 +32,12 @@ YouTube Music has no desktop app, and the web wrappers that fill the gap are
 heavy and leak memory over long sessions. Zephyr is a small native app written
 in Rust: no Electron and no embedded browser for the interface.
 
+Zephyr ships as a single standalone executable of about 9 MB. Download
+`Zephyr.exe` and run it: there is nothing to install, and it needs no
+separate runtime (sign-in uses the WebView2 component that already comes with
+Windows 11 and most Windows 10 PCs). For comparison, Electron-based apps typically weigh
+100 MB or more, because each one bundles its own copy of a browser.
+
 Zephyr is a lite client. It does not aim to replicate every feature of
 YouTube Music; it focuses on listening, and on doing that as efficiently as
 possible.
@@ -44,8 +54,6 @@ possible.
 - Explore ranks songs by genre and favors rising, smaller artists
 - Four themes: Autumn Vibes, Fresh Lemons, Bloom and Forest Walk
 - Tells you when a new release is out (Settings > About)
-
-About 9 MB on disk.
 
 ## Roadmap
 
