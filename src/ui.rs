@@ -28,9 +28,11 @@ use crate::credentials;
 use crate::data_folder;
 use crate::explore;
 use crate::folder_picker;
+use crate::links;
 use crate::media_keys::{self, MediaKey};
 use crate::queue::{Queue, Repeat, Rng};
 use crate::stats::{self, History, Popularity};
+use crate::update;
 use crate::web_sign_in::{self, Mode};
 
 const BREEZE_PNG: &[u8] = include_bytes!("../assets/zephyr_breeze.png");
@@ -220,6 +222,9 @@ enum Message {
     SignedIn(Result<HomePage, String>),
     SignOut,
     PickDataDir,
+    OpenLink(String),
+    CheckForUpdates,
+    UpdateChecked(Result<Option<update::Release>, String>),
     DataDirPicked(Result<Option<PathBuf>, String>),
     DataCopied(Result<PathBuf, String>),
     OldDataRemoved(Result<(), String>),
@@ -252,6 +257,7 @@ struct App {
     config: Config,
     config_path: PathBuf,
     settings_error: Option<String>,
+    update: update::Status,
     media_keys_note: Option<String>,
     home: Load<Vec<Shelf>>,
     home_pages: usize,
@@ -394,6 +400,7 @@ impl App {
             config,
             config_path,
             settings_error: None,
+            update: update::Status::Checking,
             media_keys_note: None,
             home: Load::Idle,
             home_pages: 0,
@@ -420,7 +427,8 @@ impl App {
             breeze: breeze::frames(BREEZE_PNG),
             breeze_frame: 0,
         };
-        let task = app.fetch(Page::Home);
+        let home = app.fetch(Page::Home);
+        let task = Task::batch([home, app.check_for_updates()]);
         (app, task)
     }
 
@@ -434,6 +442,15 @@ impl App {
             .is_some()
             .then(|| iced::time::every(TICK).map(|_| Message::Tick));
         Subscription::batch(keys.into_iter().chain(tick))
+    }
+
+    fn check_for_updates(&mut self) -> Task<Message> {
+        let Some(http) = self.http.clone() else {
+            self.update = update::Status::Failed;
+            return Task::none();
+        };
+        self.update = update::Status::Checking;
+        Task::perform(update::check(http), Message::UpdateChecked)
     }
 
     fn save_settings(&mut self) {
@@ -591,6 +608,15 @@ impl App {
             Message::SignedIn(result) => return self.signed_in(result),
             Message::SignOut => self.sign_out(),
             Message::PickDataDir => return self.pick_data_dir(),
+            Message::OpenLink(link) => self.settings_error = links::open_link(&link).err(),
+            Message::CheckForUpdates => return self.check_for_updates(),
+            Message::UpdateChecked(result) => {
+                self.update = match result {
+                    Ok(Some(release)) => update::Status::Available(release),
+                    Ok(None) => update::Status::Current,
+                    Err(_) => update::Status::Failed,
+                };
+            }
             Message::DataDirPicked(result) => return self.data_dir_picked(result),
             Message::DataCopied(result) => return self.data_copied(result),
             Message::OldDataRemoved(result) => {
@@ -1423,6 +1449,7 @@ impl App {
                     self.account_view(),
                     self.data_folder_view(),
                     self.audio_view(),
+                    &self.update,
                     self.settings_error.as_deref(),
                 ),
             ),

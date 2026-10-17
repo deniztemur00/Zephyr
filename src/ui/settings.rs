@@ -6,8 +6,13 @@ use iced::{Alignment, Element, Length};
 use super::{Message, theme};
 use crate::audio::{self, Details, Source};
 use crate::config::{Config, ThemeName};
+use crate::update::Status;
 
 const SWATCH_WIDTH: f32 = 200.0;
+const REPO: &str = "https://github.com/deniztemur00/Zephyr";
+const ISSUES: &str = "https://github.com/deniztemur00/Zephyr/issues";
+const EMAIL: &str = "deniztemur00@gmail.com";
+const MAILTO: &str = "mailto:deniztemur00@gmail.com";
 
 pub fn view<'a>(
     config: &'a Config,
@@ -15,6 +20,7 @@ pub fn view<'a>(
     account: Element<'a, Message>,
     data_folder: Element<'a, Message>,
     audio: Element<'a, Message>,
+    update: &'a Status,
     error: Option<&'a str>,
 ) -> Element<'a, Message> {
     let sections = column![
@@ -24,7 +30,7 @@ pub fn view<'a>(
         section("Playback", playback(config)),
         section("Audio", audio),
         section("Thumbnails", thumbnails(config)),
-        section("About", about(config, config_path)),
+        section("About", about(config, config_path, update)),
     ]
     .spacing(30)
     .push(error.map(|error| text(error).size(13).style(theme::danger)));
@@ -231,13 +237,17 @@ pub fn data_folder<'a>(dir: String, moving: bool, can_change: bool) -> Element<'
         row![text(dir).size(14), change]
             .spacing(16)
             .align_y(Alignment::Center),
-        note("Your sign-in, the sign-in window's saved login and view-count history are kept here. Changing the folder moves them; the app itself is just zephyr.exe."),
+        note("Your sign-in, the sign-in window's saved login and view-count history are kept here. Changing the folder moves them; the app itself is just Zephyr.exe."),
     ]
     .spacing(8)
     .into()
 }
 
-fn about<'a>(config: &'a Config, config_path: &'a Path) -> Element<'a, Message> {
+fn about<'a>(
+    config: &'a Config,
+    config_path: &'a Path,
+    update: &'a Status,
+) -> Element<'a, Message> {
     let lines = [
         format!(
             "Streams: direct from YouTube, falling back to yt-dlp at {}",
@@ -245,9 +255,60 @@ fn about<'a>(config: &'a Config, config_path: &'a Path) -> Element<'a, Message> 
         ),
         format!("Settings file: {}", config_path.display()),
     ];
-    column(lines.into_iter().map(|line| note(line).into()))
-        .spacing(4)
-        .width(Length::Fill)
+    let links = row![
+        link_button("GitHub", REPO),
+        link_button("Report a bug", ISSUES),
+        link_button(EMAIL, MAILTO),
+    ]
+    .spacing(10)
+    .wrap()
+    .vertical_spacing(10);
+    column![
+        text(format!("Zephyr {}", env!("CARGO_PKG_VERSION"))).size(15),
+        update_row(update),
+        links,
+        column(lines.into_iter().map(|line| note(line).into())).spacing(4),
+    ]
+    .spacing(10)
+    .width(Length::Fill)
+    .into()
+}
+
+fn update_row(update: &Status) -> Element<'_, Message> {
+    let (message, action) = match update {
+        Status::Checking => ("Checking for updates…", None),
+        Status::Current => ("You have the latest version.", Some("Check again")),
+        Status::Failed => ("Could not check for updates.", Some("Try again")),
+        Status::Available(release) => {
+            return row![
+                note("A new version is available."),
+                button(text(format!("Download Zephyr {}", release.version)).size(14))
+                    .padding([8, 16])
+                    .style(theme::pill)
+                    .on_press(Message::OpenLink(release.url.clone())),
+            ]
+            .spacing(12)
+            .align_y(Alignment::Center)
+            .into();
+        }
+    };
+    row![note(message)]
+        .push(action.map(|label| {
+            button(text(label).size(13))
+                .padding([6, 12])
+                .style(theme::pill)
+                .on_press(Message::CheckForUpdates)
+        }))
+        .spacing(12)
+        .align_y(Alignment::Center)
+        .into()
+}
+
+fn link_button<'a>(label: &'a str, link: &str) -> Element<'a, Message> {
+    button(text(label).size(14))
+        .padding([8, 16])
+        .style(theme::pill)
+        .on_press(Message::OpenLink(link.to_owned()))
         .into()
 }
 

@@ -33,8 +33,8 @@ jobs:
       - name: Package
         run: |
           mkdir dist
-          cp target/release/zephyr.exe dist/zephyr-windows-x64.exe
-          cd dist && sha256sum zephyr-windows-x64.exe > SHA256SUMS
+          cp target/release/zephyr.exe dist/Zephyr.exe
+          cd dist && sha256sum Zephyr.exe > SHA256SUMS
 
       # Draft: check the exe, then press Publish on GitHub. Only published releases count as updates.
       - name: Create draft release

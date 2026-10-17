@@ -9,11 +9,13 @@ mod data_folder;
 mod dpapi;
 mod explore;
 mod folder_picker;
+mod links;
 mod media_keys;
 mod queue;
 mod sha1;
 mod stats;
 mod ui;
+mod update;
 mod web_sign_in;
 
 use std::fs;
